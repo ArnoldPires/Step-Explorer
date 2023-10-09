@@ -19,14 +19,24 @@ body {
   margin: 0;
   font-family: sans-serif;
   background-color: #0b4436;
+  color: white;
 }
 button {
   cursor: pointer;
   border: none;
 }
 a {
-  text-decoration: none;
+  font-size: 1rem; 
+  text-decoration: none; 
+  color: #cc8231; 
+  text-shadow: 2px 2px rgba(0,0,0,0.5);
 }
 ul {
   list-style-type: none;
+}
+h2 {
+  font-size: 3rem; 
+  font-weight: bold; 
+  margin-bottom: 10px; 
+  text-shadow: 2px 2px rgba(0,0,0,0.5);
 }
