@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import HikeGuide from "../../pages/hikeGuide/HikeGuide";
 import "./header.css";
 
 const Header = () => {
@@ -16,7 +15,7 @@ const Header = () => {
       <nav className={`nav ${mobileMenuOpen ? 'open' : ''}`}>
         <ul>
           <li><Link to="/pages/HikeGuide">Hiking Guide</Link></li>
-          <li><Link to="#">Search For A Trail</Link></li>
+          <li><Link to="/pages/HikeSearch">Search For A Trail</Link></li>
           <li><Link to="#">Login</Link></li>
           <li><Link to="#">Sign up</Link></li>
         </ul>
