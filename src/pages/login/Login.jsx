@@ -33,7 +33,7 @@ function Login() {
         </form>
         {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
         <div>
-          <p>Don't have an account? Sign up <a href="/signup">here</a></p>
+          <p>Don't have an account? Sign up <a href="/pages/Signup">here</a></p>
         </div>
       </section>
     </section>

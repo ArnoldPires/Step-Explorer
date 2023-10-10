@@ -1,7 +1,7 @@
 .loginContainer {
   background-image: linear-gradient(#18161626,#18161626), url(../../../public/images/hikeImg6.jpg);
 }
-.loginContainer {
+.loginContainer, .signUpContainer {
   height: 83vh;
   background-size: cover;
   background-attachment: fixed;
