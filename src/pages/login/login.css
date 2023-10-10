@@ -1,0 +1,56 @@
+.loginContainer {
+  background-image: linear-gradient(#18161626,#18161626), url(../../../public/images/hikeImg6.jpg);
+}
+.loginContainer {
+  height: 83vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 5rem;
+}
+.accountContainer {
+  background-color: #0b4436bf;
+  font-weight: bold;
+	display: block;
+	margin: 0 auto;
+  width: 40rem;
+  padding-top: 1rem;
+  border-radius: 15px;
+}
+.accountContainer h2 {
+  text-align: center;
+  font-size: 40px;
+}
+.accountContainer form {
+  display: flex;
+  flex-direction: column;
+}
+.accountContainer label {
+  padding: 2%;
+}
+.accountContainer input {
+  width: 100%;
+  height: 2rem;
+}
+.accountContainer button {
+  height: 30px;
+  width: 80px;
+  margin: 2%;
+  background: #cc8231;
+  color: white;
+  border-radius: 5px;
+}
+.accountContainer p {
+  padding: 2%;
+}
+.accountContainer p a {
+  color: #cc8231;
+}
+.accountContainer p a:hover {
+  color: #d1a254;
+}
+.alert, .alert-danger {
+  text-align: center;
+  color:crimson;
+}
