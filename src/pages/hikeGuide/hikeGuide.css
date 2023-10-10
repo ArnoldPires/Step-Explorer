@@ -1,0 +1,39 @@
+.hikingGuide {
+  background-image: url('../../../public/images/hikeImg4.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.hikingTextWrap {
+  background-color: rgba(11, 68, 54, 0.75);
+  padding: 2rem;
+  max-width: 90%;
+  border-radius: 10px;
+  text-align: left;
+  color: white;
+}
+.hikingTextWrap h2 {
+  text-align: center;
+}
+.hikingTextWrap h2, h3 {
+  color: #cc8231;
+}
+.hikingTextWrap p {
+  margin-bottom: 15px;
+}
+.hikingTextWrap ol, ul {
+  margin-left: 20px;
+  padding-left: 20px;
+}
+.hikingTextWrap li {
+  margin-bottom: 5px;
+  list-style-type: initial;
+}
+.hikingTextWrap strong {
+  font-weight: bold;
+}
