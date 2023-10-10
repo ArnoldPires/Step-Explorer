@@ -1,9 +1,18 @@
+.hikingProjectWidget {
+  background-image: url(../../../public//images/hikeImg5.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 .hikingProjectWidget h2 {
   color: #cc8231;
   text-align: center;
 }
 .hikingProjectWidget p {
   text-align: center;
+}
+.widgetWrapper {
+  background-color: #0b44369e;;
 }
 .areaMapWidget {
   margin-left: 2rem;
