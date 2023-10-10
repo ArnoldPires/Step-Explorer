@@ -1,0 +1,15 @@
+.hikingProjectWidget h2 {
+  color: #cc8231;
+  text-align: center;
+}
+.hikingProjectWidget p {
+  text-align: center;
+}
+.areaMapWidget {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+.areaMapWidget iframe {
+  width: 100%;
+  height: 80vh;
+}
