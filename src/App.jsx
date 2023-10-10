@@ -5,6 +5,7 @@ import HomePage from "./pages/homePage/HomePage";
 import HikeGuide from "./pages/hikeGuide/HikeGuide";
 import HikeSearch from "./pages/hikeSearch/HikeSearch";
 import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
 import Footer from "./components/footer/footer";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/pages/HikeGuide" element={<HikeGuide />} />
           <Route path="/pages/HikeSearch" element={<HikeSearch />} />
           <Route path="/pages/Login" element={<Login />} />
+          <Route path="/pages/Signup" element={<Signup />} />
         </Routes>
         <Footer />
       </>

@@ -17,7 +17,7 @@ const Header = () => {
           <li><Link to="/pages/HikeGuide">Hiking Guide</Link></li>
           <li><Link to="/pages/HikeSearch">Search For A Trail</Link></li>
           <li><Link to="/pages/Login">Login</Link></li>
-          <li><Link to="#">Sign up</Link></li>
+          <li><Link to="/pages/Signup">Sign up</Link></li>
         </ul>
       </nav>
       <div className={`hamburger-menu ${mobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
