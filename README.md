@@ -1,5 +1,8 @@
 <h1>Step Explorer</h1>
+<img src="https://github.com/ArnoldPires/Captains-Log/blob/main/public/step-explorer-image-header.JPG">
 Link to a working version of this application: <a href="https://step-explorer.onrender.com/">Step Explorer</a>
+<p>Planning out my design</p>
+<img src="https://github.com/ArnoldPires/Captains-Log/blob/main/public/step-explorer-design.jpg">
 <br>
 Necessary Deliverables
 1) Project Planning
