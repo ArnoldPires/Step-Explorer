@@ -1,3 +1,5 @@
+<h1>Step Explorer</h1>
+<br>
 Necessary Deliverables
 1) Project Planning
 A project consists of more than just code.
