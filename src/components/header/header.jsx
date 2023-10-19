@@ -15,7 +15,8 @@ const Header = () => {
       <nav className={`nav ${mobileMenuOpen ? 'open' : ''}`}>
         <ul>
           <li><Link to="/pages/HikeGuide">Hiking Guide</Link></li>
-          <li><Link to="/pages/HikeSearch">Search For A Trail</Link></li>
+          <li><Link to="/pages/HikeSearch">Find A Hike/Trail</Link></li>
+          <li><Link to="/pages/NewTrails">Create A Hike</Link></li>
           <li><Link to="/pages/Login">Login</Link></li>
           <li><Link to="/pages/Signup">Sign up</Link></li>
         </ul>
