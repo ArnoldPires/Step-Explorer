@@ -27,19 +27,19 @@ const HomePage = () => {
         <div className="slide fade" id="slide1">
           <div className="slide-content">
             <h2>Adventure Awaits!</h2>
-            <Link to="/viewTrail">Search for your next Adventure</Link>
+            <Link to="/pages/HikeSearch">Search for your next Adventure</Link>
           </div>
         </div>
         <div className="slide fade" id="slide2">
           <div className="slide-content">
             <h2>Create your own Hikes/Trails!</h2>
-            <Link to="/viewTrail">Search for your next Adventure</Link>
+            <Link to="/pages/HikeSearch">Search for your next Adventure</Link>
           </div>
         </div>
         <div className="slide fade" id="slide3">
           <div className="slide-content">
             <h2>Check Out Our Hiking Guide!</h2>
-            <Link to="/viewTrail">Search for your next Adventure</Link>
+            <Link to="/pages/HikeSearch">Search for your next Adventure</Link>
           </div>
         </div>
       </div>

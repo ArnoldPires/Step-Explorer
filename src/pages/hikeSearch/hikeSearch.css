@@ -7,6 +7,7 @@
 .hikingProjectWidget h2 {
   color: #cc8231;
   text-align: center;
+  margin: 0;
 }
 .hikingProjectWidget p {
   text-align: center;
@@ -17,6 +18,7 @@
 .areaMapWidget {
   margin-left: 2rem;
   margin-right: 2rem;
+  padding-bottom: 5rem;
 }
 .areaMapWidget iframe {
   width: 100%;
