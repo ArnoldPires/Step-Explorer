@@ -1,68 +1,55 @@
 import express from "express";
 import morgan from "morgan";
-import connectDB from "./config/database";
-import passport from "./config/passport";
+import connectDB from "./config/database.js";
 import session from "express-session";
-const MongoStore = require("connect-mongo")(session);
+import MongoStore from "connect-mongo";
 import flash from "express-flash";
 import mongoose from "mongoose";
-require("dotenv").config({ path: "./.env" });
+import passport from "passport";
+import { configurePassport } from "./config/passport.js";
+import mainRoutes from "./routes/mainRoutes.js";
+import trailRoutes from "./routes/trailRoutes.js";
+import dotenv from "dotenv";
 
-require("./config/passport")(passport);
+dotenv.config({ path: "./.env" });
+const app = express();
+
 connectDB();
+configurePassport(passport);
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set("view engine", jsx);
 app.use(express.static("public"));
 app.use("/public/images/", express.static("./public/images"));
 
-// import express from "express";
-// import { fileURLToPath } from 'url'; // To recreate __dirname
-// import path from 'path';
-// import jsxEngine from "jsx-view-engine";
-// import mongoose from "mongoose";
-// import methodOverride from "method-override";
-// import dotenv from "dotenv";
-// import controllerlog from "./controllers/trailController.js";
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
-// dotenv.config();
+app.use(express.static("pages"));
 
-// const app = express();
+app.use(
+  session({
+    secret: "Hiking is great!",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_STRING, // Your MongoDB connection URL
+      mongooseConnection: mongoose.connection,
+    }),
+  })
+);
 
-// // Recreate __dirname in ES module
-// const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use("/", mainRoutes);
+app.use("/trails", trailRoutes);
 
-// // Destructure 'connect' and 'connection' from the imported 'mongoose'
-// const { connect, connection } = mongoose;
-
-// // Configure mongoose
-// connect(process.env.DB_STRING, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-// connection.once("open", () => {
-//   console.log("Connected to MongoDB");
-// });
-
-// // Middleware
-// app.use(express.static("public"));
-// app.use(express.urlencoded({ extended: false }));
-// app.use(methodOverride("_method"));
-
-// // Set up JSX view engine
-// app.set("view engine", "jsx");
-// app.engine("jsx", jsxEngine());
-// app.set('views', path.join(__dirname, 'src', 'pages')); // Use the recreated __dirname
-
-// // Routes
-// app.use("/pages", controllerlog);
-
-// // Home page route
-// app.get("/", (req, res) => {
-//   res.render("homePage/HomePage"); // Corrected path, no need to specify 'pages/' as it's already set in 'views'
-// });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 // // Start the server
 // const PORT = process.env.PORT || 5000;

@@ -1,82 +1,111 @@
-import { Router } from "express";
-const router = Router();
-import { find, create, findById, findByIdAndUpdate, findByIdAndRemove } from "../models/trailModel.js";
+import { findTrailById } from "../models/trailModel.js";
+import { cloudinary, uploader } from "../middleware/cloudinary.js";
+import Trail from "../models/trailModel.js"; // Import the Trail model
 
-// Index
-router.get("/Profile", async (req, res) => {
+// Get all trails
+export async function getAllTrails(req, res) {
   try {
-    const logs = await find();
-    res.render("trails/Profile", { logs });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-// New
-router.get("/NewTrails", (req, res) => {
-  res.render("trails/NewTrails");
-});
-
-// Create
-router.post("/Profile", async (req, res) => {
-  try {
-    // Check if the shipIsBroken checkbox is checked
-    const shipIsBroken = req.body.shipIsBroken === "on";
-    await create({
-      title: req.body.title,
-      entry: req.body.entry,
-      shipIsBroken: shipIsBroken,
+    const TrailAllItems = await findTrailById();
+    res.json({
+      trails: TrailAllItems,
+      user: req.user
     });
-    res.redirect("/trails/Profile");
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
-});
+}
 
-// Edit
-router.get("/:id/edit", async (req, res) => {
+// Get user-specific trails
+export async function getUserTrails(req, res) {
   try {
-    const trail = await findById(req.params.id);
-    res.render("logs/EditTrails", { trail });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-// Update
-router.put("/:id", async (req, res) => {
-  try {
-    const shipIsBroken = req.body.shipIsBroken === "on";
-    await findByIdAndUpdate(req.params.id, {
-      title: req.body.title,
-      entry: req.body.entry,
-      shipIsBroken: shipIsBroken,
+    const TrailItems = await find({ user: req.user._id });
+    res.json({
+      trails: TrailItems,
+      user: req.user
     });
-    res.redirect(`/trails/${req.params.id}`);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
-});
+}
 
-// Delete
-router.delete("/:id", async (req, res) => {
+// Create a new trail
+export async function createTrail(req, res) {
   try {
-    await findByIdAndRemove(req.params.id);
-    res.redirect("/trails/Profile");
-  } catch (error) {
-    console.log(error);
+    const result = await uploader.upload(req.file.path);
+    const trail = new Trail({ // Create a new Trail instance
+      name: req.body.name,
+      cloudinaryId: result.public_id, // Corrected field name to 'cloudinaryId'
+      picture: result.secure_url,
+      difficulty: req.body.difficulty, // Corrected field name to 'difficulty'
+      location: req.body.location,
+      length: req.body.length,
+      routeType: req.body.routeType,
+      description: req.body.description,
+      suitability: req.body.suitability,
+      attractions: req.body.attractions, // Corrected field name to 'attractions'
+      gMaps: req.body.gMaps,
+      user: req.user._id, // Corrected field name to 'user' and added ._id
+    });
+    await trail.save(); // Save the newly created trail
+    res.redirect(`/trails/${trail._id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
   }
-});
+}
 
-// Show
-router.get("/:id", async (req, res) => {
-  console.log(req.params.id);
+// Get trail by ID
+export async function getTrailById(req, res) {
+  const { id } = req.params;
   try {
-    const trail = await findById(req.params.id);
-    res.render("trails/ShowTrails", { trail: trail });
-  } catch (error) {
-    console.log(error);
+    const trail = await findById(id).populate("user");
+    res.render("ViewTrail.jsx", {
+      trail: trail,
+      user: req.user
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Internal Server Error");
   }
-});
+}
 
-export default router;
+// Get trail update form
+export async function getUpdate(req, res) {
+  const { id } = req.params;
+  try {
+    const trail = await findById(id).populate("user");
+    res.render("Update.jsx", { trail, user: req.user });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+// Update a trail
+export async function putTrail(req, res) {
+  try {
+    const trail = await findOneAndUpdate(
+      { _id: req.params.id },
+      req.body
+    );
+    res.redirect(`/trails/${trail._id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+// Delete a trail
+export async function deleteTrail(req, res) {
+  try {
+    const trail = await findById({ _id: req.params.id });
+    await uploader.destroy(trail.cloudinaryid);
+    await findByIdAndRemove({ _id: req.params.id });
+    res.redirect("/profile");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
