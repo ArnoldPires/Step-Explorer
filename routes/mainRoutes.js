@@ -5,11 +5,11 @@ import { ensureAuth, ensureGuest } from "../middleware/authMiddleware.js";
 import * as trailsController from "../controllers/trailController.js";
 
 router.get("/", trailsController.getAllTrails); // Ensure 'trailsController' is imported correctly
-router.get("/login", getLogin);
-router.post("/login", postLogin);
-router.get("/profile", ensureAuth, trailsController.getAllTrails);
-router.get("/logout", logout);
-router.get("/signup", getSignup);
-router.post("/signup", postSignup);
+router.get("/Login", getLogin);
+router.post("/Login", postLogin);
+router.get("/Profile", ensureAuth, trailsController.getAllTrails);
+router.get("/Logout", logout);
+router.get("/Signup", getSignup);
+router.post("/Signup", postSignup);
 
 export default router;
