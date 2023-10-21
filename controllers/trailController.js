@@ -1,6 +1,6 @@
 import { findTrailById } from "../models/trailModel.js";
 import { cloudinary, uploader } from "../middleware/cloudinary.js";
-import Trail from "../models/trailModel.js"; // Import the Trail model
+import Trail from "../models/trailModel.js";
 
 // Get all trails
 export async function getAllTrails(req, res) {
@@ -36,20 +36,20 @@ export async function createTrail(req, res) {
     const result = await uploader.upload(req.file.path);
     const trail = new Trail({ // Create a new Trail instance
       name: req.body.name,
-      cloudinaryId: result.public_id, // Corrected field name to 'cloudinaryId'
+      cloudinaryId: result.public_id,
       picture: result.secure_url,
-      difficulty: req.body.difficulty, // Corrected field name to 'difficulty'
+      difficulty: req.body.difficulty,
       location: req.body.location,
       length: req.body.length,
       routeType: req.body.routeType,
       description: req.body.description,
       suitability: req.body.suitability,
-      attractions: req.body.attractions, // Corrected field name to 'attractions'
+      attractions: req.body.attractions,
       gMaps: req.body.gMaps,
-      user: req.user._id, // Corrected field name to 'user' and added ._id
+      user: req.user._id,
     });
     await trail.save(); // Save the newly created trail
-    res.redirect(`/trails/${trail._id}`);
+    res.redirect(`/ViewTrail/${trail._id}`);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -90,7 +90,7 @@ export async function putTrail(req, res) {
       { _id: req.params.id },
       req.body
     );
-    res.redirect(`/trails/${trail._id}`);
+    res.redirect(`/ViewTrail/${trail._id}`);
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -103,7 +103,7 @@ export async function deleteTrail(req, res) {
     const trail = await findById({ _id: req.params.id });
     await uploader.destroy(trail.cloudinaryid);
     await findByIdAndRemove({ _id: req.params.id });
-    res.redirect("/profile");
+    res.redirect("/Profile");
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

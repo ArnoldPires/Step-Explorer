@@ -9,6 +9,7 @@ import passport from "passport";
 import { configurePassport } from "./config/passport.js";
 import mainRoutes from "./routes/mainRoutes.js";
 import trailRoutes from "./routes/trailRoutes.js";
+import cors from 'cors';
 import dotenv from "dotenv";
 
 dotenv.config({ path: "./.env" });
@@ -16,6 +17,8 @@ const app = express();
 
 connectDB();
 configurePassport(passport);
+
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -40,19 +43,18 @@ app.use(
   })
 );
 
+app.get('/api/ping', (req, res) => {
+  res.json({ message: 'Backend is up and running.' });
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use("/", mainRoutes);
-app.use("/trails", trailRoutes);
+app.use("/ViewTrail", trailRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5173; // Set the port number to 5173
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// // Start the server
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Listening on port ${PORT}`);
-// });

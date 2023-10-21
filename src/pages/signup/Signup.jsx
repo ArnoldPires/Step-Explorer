@@ -16,14 +16,23 @@ function SignUp() {
       return;
     }
 
-    // Perform your signup logic here
     try {
-      // Send a request to your server to handle signup
-      // Example: const response = await fetch('/signup', { method: 'POST', body: JSON.stringify({ name, email, password }) });
+      const response = await fetch('/Signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }), // Send user data to the server
+      });
 
-      // Check the response status and handle success/failure
-      // Example: if (response.ok) { /* Handle successful signup */ }
-      // Example: else { /* Handle signup error and set error message */ }
+      if (response.ok) {
+        // Redirect the user to the homepage or a login page upon successful signup
+        window.location.href = '/'; // Change this URL as needed
+      } else {
+        // Handle signup errors
+        const data = await response.json();
+        setErrorMessage(data.message); // Display the error message returned from the server
+      }
     } catch (error) {
       console.error('Error:', error);
     }
@@ -41,7 +50,7 @@ function SignUp() {
           <button type="submit">Submit</button>
         </form>
         {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-        <p>Already have an account? Click <a href="/pages/Login">here.</a></p>
+        <p>Already have an account? Click <a href="/Login">here.</a></p>
       </section>
     </section>
   );

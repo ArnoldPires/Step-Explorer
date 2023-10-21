@@ -1,5 +1,5 @@
 import { Router } from "express";
-import multer from "multer"; // Import multer
+import multer from "multer";
 import {
   getAllTrails,
   createTrail,

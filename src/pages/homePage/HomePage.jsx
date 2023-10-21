@@ -19,6 +19,11 @@ const HomePage = () => {
       slides[slideIndex-1].style.display = "block";  
       setTimeout(showSlides, 5000);
     }
+    // Wait for the DOM to fully load before running the code
+  window.addEventListener("DOMContentLoaded", () => {
+    let slideIndex = 0;
+    showSlides();
+  });
   }, []);
 
   return (
@@ -27,19 +32,19 @@ const HomePage = () => {
         <div className="slide fade" id="slide1">
           <div className="slide-content">
             <h2>Adventure Awaits!</h2>
-            <Link to="/pages/HikeSearch">Search for your next Adventure</Link>
+            <Link to="/HikeSearch">Search for your next Adventure</Link>
           </div>
         </div>
         <div className="slide fade" id="slide2">
           <div className="slide-content">
             <h2>Create your own Hikes/Trails!</h2>
-            <Link to="/pages/HikeSearch">Search for your next Adventure</Link>
+            <Link to="/HikeSearch">Search for your next Adventure</Link>
           </div>
         </div>
         <div className="slide fade" id="slide3">
           <div className="slide-content">
             <h2>Check Out Our Hiking Guide!</h2>
-            <Link to="/pages/HikeSearch">Search for your next Adventure</Link>
+            <Link to="/HikeSearch">Search for your next Adventure</Link>
           </div>
         </div>
       </div>
