@@ -1,12 +1,20 @@
 import passport from "passport";
 import validator from "validator";
 import User from "../models/user.js";
+import bcrypt from "bcrypt";
+
+const sendError = (res, status, message) => {
+  res.status(status).json({ success: false, message });
+};
 
 export function getLogin(req, res) {
   if (req.user) {
-    return res.status(200).json({ message: "User is already logged in" });
+    return res.redirect("/Profile");
   }
-  res.status(200).json({ message: "You can show the login form here" });
+  res.render("Login", {
+    title: "Login",
+    user: null,
+  });
 }
 
 export function postLogin(req, res, next) {
@@ -18,19 +26,20 @@ export function postLogin(req, res, next) {
     validationErrors.push({ msg: "You gotta enter in a password to continue." });
   }
   if (validationErrors.length) {
-    return res.status(400).json({ errors: validationErrors });
+    req.flash("errors", validationErrors);
+    return res.redirect("/Login");
   }
   req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
 
   passport.authenticate("local", (err, user, info) => {
     if (!user) {
-      return res.status(401).json({ errors: info });
+      req.flash("errors", info);
+      return res.redirect("/Login");
     }
     req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      res.status(200).json({ message: "You've logged in." });
+      if (err) { return next(err); }
+      req.flash("success", { msg: "You've logged in." });
+      res.redirect(req.session.returnTo || "/Profile");
     });
   })(req, res, next);
 }
@@ -39,58 +48,73 @@ export function logout(req, res) {
   req.logout();
   req.session.destroy(err => {
     if (err) {
-      console.error("Error: Failed to Logout for some reason...Try refreshing the browser", err);
+      console.error("Error: Failed to destroy the session during logout.", err);
     }
     req.user = null;
-    res.status(200).json({ message: "Logged out successfully." });
+    res.redirect("/");
   });
 }
 
 export function getSignup(req, res) {
   if (req.user) {
-    return res.status(200).json({ message: "User is already signed up and logged in" });
+    return res.redirect("/Profile");
   }
-  res.status(200).json({ message: "You can show the signup form here" });
+  res.render("Signup", {
+    title: "Create an Account",
+    user: null,
+  });
 }
 
 export async function postSignup(req, res, next) {
-  const validationErrors = [];
-  if (!validator.isEmail(req.body.email)) {
-    validationErrors.push({ msg: "That's not a valid Email Address." });
-  }
-  if (!validator.isLength(req.body.password, { min: 8 })) {
-    validationErrors.push({ msg: "That Password is too short, at least 8 characters long please." });
-  }
-  if (req.body.password !== req.body.confirmPassword) {
-    validationErrors.push({ msg: "That Password doesn't match." });
-  }
-  if (validationErrors.length) {
-    return res.status(400).json({ errors: validationErrors });
-  }
-  req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
-
   try {
-    const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) {
-      return res.status(400).json({ errors: [{ msg: "An account with that email address already exists." }] });
+    const { name, email, password, confirmPassword } = req.body;
+
+    // Validate user input
+    const validationErrors = [];
+    if (!validator.isEmail(email)) {
+      validationErrors.push("That's not a valid email address.");
+    }
+    if (!validator.isLength(password, { min: 8 })) {
+      validationErrors.push("The password must be at least 8 characters long.");
+    }
+    if (password !== confirmPassword) {
+      validationErrors.push("Passwords do not match.");
+    }
+    if (validationErrors.length > 0) {
+      return sendError(res, 400, validationErrors.join(" "));
     }
 
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+    // Normalize the email address
+    const normalizedEmail = validator.normalizeEmail(email, { gmail_remove_dots: false });
+
+    // Check if the user already exists in the database
+    const existingUser = await User.findOne({ email: normalizedEmail });
+    if (existingUser) {
+      return sendError(res, 400, "An account with that email address already exists.");
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({
+      name,
+      email: normalizedEmail,
+      password: hashedPassword,
     });
 
-    await user.save();
+    // Save the user to the database
+    await newUser.save();
 
-    req.logIn(user, (err) => {
+    // Log in the user
+    req.logIn(newUser, (err) => {
       if (err) {
         return next(err);
       }
-      res.status(201).json({ message: "Signup successful." });
+      res.status(200).json({ success: true, message: "Signup successful. You are now logged in." });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ errors: [{ msg: "Signup failed." }] });
+    return sendError(res, 500, "An unexpected error occurred during signup.");
   }
 }

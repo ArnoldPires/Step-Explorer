@@ -18,7 +18,10 @@ const app = express();
 connectDB();
 configurePassport(passport);
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}))
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -42,10 +45,6 @@ app.use(
     }),
   })
 );
-
-app.get('/api/ping', (req, res) => {
-  res.json({ message: 'Backend is up and running.' });
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
