@@ -8,15 +8,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Perform your login logic here
     try {
-      // Send a request to your server to handle login
-      // Example: const response = await fetch('/login', { method: 'POST', body: JSON.stringify({ email, password }) });
-
-      // Check the response status and handle success/failure
-      // Example: if (response.ok) { /* Handle successful login */ }
-      // Example: else { /* Handle login error and set error message */ }
     } catch (error) {
       console.error('Error:', error);
     }

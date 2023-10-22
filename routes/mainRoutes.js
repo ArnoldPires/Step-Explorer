@@ -1,15 +1,20 @@
 import express from "express";
-const router = express.Router(); // Use express.Router() to create a router instance
-import { getLogin, postLogin, logout, getSignup, postSignup } from "../controllers/authController.js";
+import { Router } from 'express';
+const router = Router();
+
+import * as authController from "../controllers/authController.js";
 import { ensureAuth, ensureGuest } from "../middleware/authMiddleware.js";
 import * as trailsController from "../controllers/trailController.js";
 
 router.get("/", trailsController.getAllTrails); // Ensure 'trailsController' is imported correctly
-router.get("/Login", getLogin);
-router.post("/Login", postLogin);
-router.get("/Profile", ensureAuth, trailsController.getAllTrails);
-router.get("/Logout", logout);
-router.get("/Signup", getSignup);
-router.post("/Signup", postSignup);
+router.get("/login", authController.getLogin);
+router.post("/login", authController.postLogin);
+router.get("/profile", ensureAuth, trailsController.getAllTrails);
+router.get("/logout", authController.logout);
+router.get("/signup", authController.getSignup);
+router.post('/signup', authController.postSignup);
+router.get("/api/ping", (req, res) => {
+  res.json({ message: "Backend is up and running." });
+});
 
 export default router;

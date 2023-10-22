@@ -46,4 +46,4 @@ UserSchema.methods.comparePassword = function comparePassword(
   })
 }
 
-export default model("user", UserSchema)
+export default model("User", UserSchema)
