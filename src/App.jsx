@@ -5,7 +5,7 @@ import HomePage from "./pages/homePage/HomePage";
 import ViewTrail from './pages/viewTrail/ViewTrail';
 import HikeGuide from "./pages/hikeGuide/HikeGuide";
 import HikeSearch from "./pages/hikeSearch/HikeSearch";
-import NewTrails from './pages/newTrail/NewTrails';
+import CreateTrail from "./pages/createTrail/createTrail";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Signup from "./pages/signup/Signup";
@@ -21,7 +21,7 @@ function App() {
           <Route path="/ViewTrail" element={<ViewTrail />} />
           <Route path="/HikeGuide" element={<HikeGuide />} />
           <Route path="/HikeSearch" element={<HikeSearch />} />
-          <Route path="/NewTrails" element={<NewTrails />} />
+          <Route path="/CreateTrail" element={<CreateTrail />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Signup" element={<Signup />} />
