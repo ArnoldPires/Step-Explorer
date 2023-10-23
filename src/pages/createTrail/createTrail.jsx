@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import TrailForm from '../../components/trailForm/TrailForm';
-import './createTrail.css'; // Make sure your CSS is imported
+import './createTrail.css';
 
 export default class NewTrails extends Component {
   render() {
