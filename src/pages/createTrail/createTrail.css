@@ -1,0 +1,159 @@
+.createTrailContainer {
+  background-image: url('../../../public/images/hikeImg8.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: bottom;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+.createTrail {
+  background-color: #0b4436cf;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: max-content;
+  padding: 2rem;
+  color: white;
+  margin: 0 auto;
+}
+.createTrail h2 {
+  color: #cc8231;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.formWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5rem;
+}
+.submitForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.createTrail label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.createTrail span {
+  font-weight: bold;
+}
+.createTrail input, .createTrail select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s;
+  width: fit-content;
+}
+.createTrail input:focus, .createTrail select:focus {
+  border-color: #cc8231;
+  outline: none;
+}
+@media (max-width: 768px) {
+  .createTrail {
+    height: auto;
+  }
+  
+  .createTrail label, .createTrail input, .createTrail select {
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+  .createTrailContainer {
+    padding-top: 1rem;
+  }
+
+  .createTrail {
+    padding: 1rem;
+  }
+}
+.map {
+  margin: 1rem 0;
+}
+.map iframe {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.hover-instructions {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.instructions-content {
+  visibility: hidden;
+  width: 300px;
+  background-color: #f9f9f9;
+  color: #000;
+  text-align: left;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -150px; 
+}
+.hover-instructions:hover .instructions-content {
+  visibility: visible;
+}
+.gLink,
+.trailLink,
+.description,
+.buttonWrapper {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.description {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 30rem;
+}
+.description h3 {
+  color: #cc8231;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+}
+.description textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  border-radius: 4px; 
+  border: 1px solid #ccc; 
+  resize: vertical; 
+}
+.description textarea:focus {
+  border-color: #cc8231; 
+  outline: none;
+  box-shadow: 0 0 3px 2px rgba(204, 130, 49, 0.5); 
+}
+/* Responsiveness */
+@media (max-width: 768px) {
+  .description textarea {
+    font-size: 14px; 
+  }
+}
+@media (max-width: 480px) {
+  .description {
+    align-items: stretch; 
+  }
+}
+.submitbutton {
+  background-color: #cc8231;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.submitbutton:hover {
+  background-color: #a86725;
+}
